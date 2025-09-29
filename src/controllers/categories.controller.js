@@ -1,6 +1,13 @@
+import { CategoryModel } from "../models/mongoose/category.model.js";
+
 export const createCategory = async (req, res) => {
+  const { name, description } = req.body;
   try {
     // TODO: crear category (solo admin)
+    const newCategory = await CategoryModel.create({
+      name,
+      description
+    });
     return res.status(201).json({ msg: "Categoría creada correctamente" });
   } catch (error) {
     console.log(error);
@@ -19,11 +26,15 @@ export const getAllCategories = async (_req, res) => {
 };
 
 export const deleteCategory = async (req, res) => {
+  const { id } = req.params;
   try {
     // TODO: eliminar category (solo admin) y actualizar assets que referencian
-    return res.status(204).json({ msg: "Categoría eliminada correctamente" });
+    const deletedCategory = await CategoryModel.findByIdAndDelete(id);
+    await AssetModel.updateMany({ assets: id }, { $pull: { assets: id } })
+    return res.status(204).json({ msg: "Categoría eliminada correctamente" , deletedCategory});
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
   }
 };
+
