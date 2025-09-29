@@ -35,17 +35,25 @@ const UserSchema = new Schema(
         required: true,
         minlength: 2,
         maxlength: 50
-
       },
       phone: {
-
+        type: String,
+        opcional: true
       }
     },
     deletedAt: { type: Date, default: null },
     // ! FALTA COMPLETAR ACA
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  },
+  {
+    versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
+
 
 // ! FALTA COMPLETAR ACA
 

@@ -12,13 +12,13 @@ export const AssetCategoryModel = sequelize.define("AssetCategory", {
 // ! FALTA COMPLETAR ACA
 
 AssetModel.belongsToMany(CategoryModel, {
-  through: AssetCategoryModel,
+  through: AssetCategory,
   foreignKey: "asset_id",
   as: "assets",
 });
 
 CategoryModel.belongsToMany(AssetModel, {
-  through: AssetCategoryModel,
+  through: AssetCategory,
   foreignKey: "category_id",
   as: "categories",
 });
